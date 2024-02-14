@@ -1,12 +1,22 @@
 import React, { useState } from "react";
-
+import { Button } from "./Button";
 import { NavLink } from "react-router-dom";
 
 function Navbar() {
   const [click, setClick] = useState(false);
-
+  const [button, setButton] = useState(true);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+
+  const showButton = () => {
+    if (window.innerWidth <= 960) {
+      setButton(false);
+    } else {
+      setButton(true);
+    }
+  };
+
+  window.addEventListener("resize", showButton);
   return (
     <>
       <nav className="navbar">
@@ -23,7 +33,35 @@ function Navbar() {
                 Home
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink
+                to="/services"
+                className="nav-links"
+                onClick={closeMobileMenu}
+              >
+                Services
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to="/products"
+                className="nav-links"
+                onClick={closeMobileMenu}
+              >
+                Products
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to="/sign-up"
+                className="nav-links-mobile"
+                onClick={closeMobileMenu}
+              >
+                Sign-Up
+              </NavLink>
+            </li>
           </ul>
+          {button && <Button buttonStyle="btn--outline">SIGN UP</Button>}
         </div>
       </nav>
     </>
